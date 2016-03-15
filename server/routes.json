@@ -1,0 +1,28 @@
+[
+  {
+    "host": "localhost",
+    "port": "3002",
+    "redirects": [
+      {
+        "path": "/api/owners",
+        "method": "get"
+      },
+      {
+        "path": "/api/owners",
+        "method": "post"
+      },
+      {
+        "path": "/api/owners/:ownerId",
+        "method": "get"
+      },
+      {
+        "path": "/api/owners/:ownerId",
+        "method": "put"
+      },
+      {
+        "path": "/api/owners/:ownerId",
+        "method": "delete"
+      }
+    ]
+  }
+]
