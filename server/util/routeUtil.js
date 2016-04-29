@@ -25,8 +25,17 @@ function createRouteUtil(host, port) {
 		doRequest: function (req, res, callback) {
 			if (!callback) {
 				callback = function (error, response, data) {
-					return res.status(response.statusCode).send(error || data);
-				};
+					if (error) {
+						return res.status(response.statusCode).json({
+							success: false,
+							errors: error
+						});
+					}
+					return res.status(response.statusCode).json({
+						success: true,
+						data: data ? JSON.parse(data) : null
+					});
+				}
 			}
 			let options = this.buildRequestOptions(req, callback);
 			req.pipe(request(options));
