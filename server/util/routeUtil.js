@@ -7,12 +7,12 @@ function createRouteUtil(host, port) {
 		buildRequestOptions: function (req, callback) {
 			let method = req.method.toUpperCase();
 
-			if (host.indexOf("http://") <= -1 && host.indexOf("https://") <= -1) {
-				host = "http://" + host;
+			if (host.indexOf('http://') <= -1 && host.indexOf('https://') <= -1) {
+				host = 'http://' + host;
 			}
 
 			let options = {
-				uri: host + ":" + port + req.originalUrl,
+				uri: host + ':' + port + req.originalUrl,
 				method: method,
 				callback: callback
 			};
@@ -26,7 +26,7 @@ function createRouteUtil(host, port) {
 			if (!callback) {
 				callback = function (error, response, data) {
 					if (error) {
-						return res.status(response.statusCode).json({
+						return res.status((response && response.statusCode) || 404).json({
 							success: false,
 							errors: error
 						});
@@ -35,15 +35,15 @@ function createRouteUtil(host, port) {
 						success: true,
 						data: data ? JSON.parse(data) : null
 					});
-				}
+				};
 			}
 			let options = this.buildRequestOptions(req, callback);
 			req.pipe(request(options));
 		}
-	}
+	};
 }
 
 module.exports = {
-	catUtil: createRouteUtil("localhost", "3001"),
-	ownerUtil: createRouteUtil("localhost", "3002")
+	catUtil: createRouteUtil('localhost', '3001'),
+	ownerUtil: createRouteUtil('localhost', '3002')
 };
